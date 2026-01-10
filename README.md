@@ -1,84 +1,104 @@
-Project: Config-Driven Dashboard (React)
-Overview
+# 📊 Config-Driven Dashboard (React)
 
-This project demonstrates a config-driven, declarative data pipeline built using React.
-The table structure, filters, and search behavior are defined via configuration rather than hardcoded UI logic.
+## Overview
 
-The goal of this project is not UI complexity, but clean system design and data flow clarity.
+This project demonstrates a **config-driven, declarative data pipeline** built using **React**.
 
-🔧 Core Concepts Demonstrated
+The table structure, filters, and search behavior are defined via **configuration**, rather than hardcoded UI logic.  
+The focus of this project is **clean system design and data flow clarity**, not UI complexity or visual polish.
 
-Config-driven UI rendering
+---
 
-Declarative state management
+## 🔧 Core Concepts Demonstrated
 
-Pure functions for data transformation
+- Config-driven UI rendering  
+- Declarative state management  
+- Pure functions for data transformation  
+- Composable data pipelines (**filter → search → sort**)  
+- Automatic re-rendering via React state (no manual DOM manipulation)
 
-Composable data pipelines (filter → search → sort)
+---
 
-Automatic re-rendering via React state (no manual DOM manipulation)
+## 🧠 Data Flow (Pipeline)
 
-🧠 Data Flow (Pipeline)
-Raw Data
-   ↓
-Filter (dropdown-based conditions)
-   ↓
-Search (text-based, multi-column)
-   ↓
-Sort (column + direction)
-   ↓
-Render Table
+The application follows a clear and predictable data pipeline:
 
-🗂️ Configuration-Driven Design
+Raw Data -> Filter (dropdown-based conditions) -> Search (text-based, multi-column) -> Sort (column + direction) -> Render Table
 
-All behavior is controlled via tableConfig:
+Each stage:
+- Receives data
+- Returns new data
+- Has no side effects
 
-Table columns
+---
 
-Enabled filters
+## 🗂️ Configuration-Driven Design
 
-Searchable fields
+All table behavior is controlled through a single configuration file: `tableConfig`.
 
-This allows:
+### Configuration Controls:
+- Table columns
+- Enabled filters
+- Searchable fields
 
-Easy extension
+### Benefits:
+- Easy extension without UI rewrites  
+- Zero hardcoded column or filter logic  
+- Clear separation of concerns between **data**, **logic**, and **UI**
 
-Zero UI rewrites for new columns or filters
+---
 
-Clear separation of concerns
+## 🧪 Key Design Decisions
 
-🧪 Key Design Decisions
+### 1. No Derived Data Stored in State
+Filtered and sorted results are **derived during render**, not stored in React state.  
+This avoids redundancy and keeps state minimal.
 
-No derived data stored in state
-Filtered and sorted results are derived during render.
+### 2. Pure Helper Functions
+Data transformation logic is isolated into pure functions:
+- `filterData`
+- `sortData`
 
-Pure helper functions (filterData, sortData)
-Logic is isolated, testable, and React-independent.
+These functions are:
+- Testable
+- Reusable
+- Independent of React
 
-Single source of truth (data)
-Raw data is never mutated.
+### 3. Single Source of Truth
+The original dataset (`data`) is never mutated.  
+All transformations operate on copies.
 
-🛠️ Tech Stack
+---
 
-React (Vite)
+## 🛠️ Tech Stack
 
-JavaScript
+- **React** (Vite)
+- **JavaScript**
+- Functional programming style (pure functions)
 
-Functional programming style (pure functions)
+---
 
-🎯 Why this project?
+## 🎯 Why This Project?
 
-This project was built to practice frontend system thinking, not just React syntax.
-The same pipeline-based reasoning applies to backend services, data engineering, and AI systems.
+This project was built to practice **frontend system thinking**, not just React syntax.
 
-🚀 Possible Extensions (Future Work)
+The same pipeline-based reasoning used here applies directly to:
+- Backend services
+- Data engineering workflows
+- AI and ML pipelines
 
-Pagination
+---
 
-Backend-driven configuration
+## 🚀 Possible Extensions (Future Work)
 
-Persisted filters/search
+- Pagination
+- Backend-driven configuration
+- Persisted filters and search state
+- Performance optimization using `useMemo`
+- Role-based table views
 
-Performance optimization (useMemo)
+---
 
-Role-based table views
+## 📌 Key Takeaway
+
+> This project emphasizes **how data flows through a system**, not just how UI components are written.
