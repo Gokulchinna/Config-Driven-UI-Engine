@@ -1,0 +1,45 @@
+{
+  "title": "B.Tech Student Academic & Placement Tracker",
+  "layout": [
+    {
+      "id": "student-stat-1",
+      "type": "stats-card",
+      "props": {
+        "title": "Placed Students Count",
+        "metric": "count",
+        "targetField": "placedStatus",
+        "targetValue": "Placed"
+      }
+    },
+    {
+      "id": "student-stat-2",
+      "type": "stats-card",
+      "props": {
+        "title": "Average CGPA",
+        "metric": "average",
+        "targetField": "cgpa"
+      }
+    },
+    {
+      "id": "student-table",
+      "type": "table",
+      "props": {
+        "columns": [
+          { "key": "name", "label": "Student Name" },
+          { "key": "branch", "label": "Branch" },
+          { "key": "cgpa", "label": "CGPA" },
+          { "key": "attendance", "label": "Attendance %" },
+          { "key": "placedStatus", "label": "Placement Status" }
+        ],
+        "filters": [
+          { "key": "branch", "label": "Branch" },
+          { "key": "placedStatus", "label": "Placement Status" }
+        ],
+        "search": {
+          "enabled": true,
+          "keys": ["name", "branch", "placedStatus"]
+        }
+      }
+    }
+  ]
+}

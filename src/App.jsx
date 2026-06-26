@@ -1,103 +1,93 @@
-import { useState } from "react";
-import { data } from "./data";
-import { tableConfig } from "./tableConfig";
-import { sortData } from "./utils/sortData";
-import { filterData } from "./utils/filterData";
+import { useState, useEffect } from "react";
+import { registry } from "./engine/Registry";
+import { Renderer } from "./engine/Renderer";
+import { runPipeline } from "./engine/pipeline";
+import Table from "./components/Table";
+import StatsCard from "./components/StatsCard";
 
+// Import schemas and data
+import studentSchema from "./schemas/student.json";
+import studentData from "./schemas/studentData.json";
+import governmentSchema from "./schemas/government.json";
+import governmentData from "./schemas/governmentData.json";
+
+// Register components dynamically to keep the engine decoupled
+registry.register("table", Table);
+registry.register("stats-card", StatsCard);
 
 function App() {
-  const [sortConfig, setSortConfig] = useState(null);
+  const [activeDemo, setActiveDemo] = useState("student");
   const [filters, setFilters] = useState({});
-
-
-  // const sortedData = sortData(data, sortConfig);
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredData = filterData(
-    data,
+  const [sortConfig, setSortConfig] = useState(null);
+
+  // Determine active schema and raw dataset
+  const activeSchema =
+    activeDemo === "student" ? studentSchema : governmentSchema;
+  const rawData = activeDemo === "student" ? studentData : governmentData;
+
+  // Reset controls when toggling dashboards
+  useEffect(() => {
+    setFilters({});
+    setSearchQuery("");
+    setSortConfig(null);
+  }, [activeDemo]);
+
+  // Extract search configuration keys from the schema table layout
+  const tableWidget = activeSchema.layout.find((w) => w.type === "table");
+  const searchKeys = tableWidget?.props?.search?.keys || [];
+
+  // Run the data pipeline: Filter -> Search -> Sort
+  const processedData = runPipeline(rawData, {
     filters,
     searchQuery,
-    tableConfig.search.keys
-  );
-  const sortedData = sortData(filteredData, sortConfig);
-
-
+    searchKeys,
+    sortConfig,
+  });
 
   return (
-    <div>
-      <h2>Config Driven Dashboard</h2>
-
-      {tableConfig.search.enabled && (
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      )}
-
-
-      <div>
-        {tableConfig.filters.map((filter) => (
-          <select
-            key={filter.key}
-            onChange={(e) =>
-              setFilters((prev) => ({
-                ...prev,
-                [filter.key]: e.target.value,
-              }))
-            }
+    <div className="app-container">
+      <header className="app-header">
+        <div className="branding">
+          <h1>Config-Driven UI Engine</h1>
+          <p className="subtitle">
+            Dynamic layout compiler powered by JSON schemas
+          </p>
+        </div>
+        <div className="demo-switchers">
+          <button
+            className={`btn-switcher ${activeDemo === "student" ? "active" : ""}`}
+            onClick={() => setActiveDemo("student")}
           >
-            <option value="">All {filter.label}</option>
+            🎓 Student Analytics
+          </button>
+          <button
+            className={`btn-switcher ${activeDemo === "government" ? "active" : ""}`}
+            onClick={() => setActiveDemo("government")}
+          >
+            🏛️ Government Queue
+          </button>
+        </div>
+      </header>
 
-            {[...new Set(data.map((row) => row[filter.key]))].map(
-              (value) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              )
-            )}
-          </select>
-        ))}
-      </div>
+      <main className="app-main">
+        <div className="dashboard-title-card">
+          <h2>{activeSchema.title}</h2>
+        </div>
 
-
-      <table border="1">
-        <thead>
-          <tr>
-            {tableConfig.columns.map((col) => (
-              <th
-                key={col.key}
-                onClick={() => {
-                  setSortConfig((prev) => {
-                    if (prev && prev.key === col.key) {
-                      return {
-                        key: col.key,
-                        direction:
-                          prev.direction === "asc" ? "desc" : "asc",
-                      };
-                    }
-                    return { key: col.key, direction: "asc" };
-                  });
-                }}
-              >
-                {col.label}
-                {sortConfig?.key === col.key &&
-                  (sortConfig.direction === "asc" ? "▲" : "▼")}
-              </th>
-            ))}
-          </tr>
-        </thead>
-
-        <tbody>
-          {sortedData.map((row) => (
-            <tr key={row.id}>
-              {tableConfig.columns.map((col) => (
-                <td key={col.key}>{row[col.key]}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        {/* Dynamic UI Rendering Engine */}
+        <Renderer
+          schema={activeSchema}
+          data={processedData}
+          rawData={rawData}
+          filters={filters}
+          setFilters={setFilters}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          sortConfig={sortConfig}
+          setSortConfig={setSortConfig}
+        />
+      </main>
     </div>
   );
 }

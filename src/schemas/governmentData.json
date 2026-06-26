@@ -1,0 +1,47 @@
+[
+  {
+    "id": 101,
+    "citizenName": "Amit Patel",
+    "service": "Passport Renewal",
+    "tokenNumber": "A-12",
+    "slaStatus": "Within SLA",
+    "assignedOfficer": "Officer Rajesh",
+    "ticketStatus": "In Progress"
+  },
+  {
+    "id": 102,
+    "citizenName": "Meera Krishnan",
+    "service": "Aadhaar Correction",
+    "tokenNumber": "B-45",
+    "slaStatus": "Overdue",
+    "assignedOfficer": "Officer Priya",
+    "ticketStatus": "Pending"
+  },
+  {
+    "id": 103,
+    "citizenName": "John Doe",
+    "service": "Driver License renewal",
+    "tokenNumber": "C-08",
+    "slaStatus": "Within SLA",
+    "assignedOfficer": "Officer Rajesh",
+    "ticketStatus": "Completed"
+  },
+  {
+    "id": 104,
+    "citizenName": "Fatima Bi",
+    "service": "Passport Renewal",
+    "tokenNumber": "A-13",
+    "slaStatus": "Overdue",
+    "assignedOfficer": "Officer Priya",
+    "ticketStatus": "Pending"
+  },
+  {
+    "id": 105,
+    "citizenName": "Suresh Kumar",
+    "service": "Aadhaar Correction",
+    "tokenNumber": "B-46",
+    "slaStatus": "Within SLA",
+    "assignedOfficer": "Officer Rajesh",
+    "ticketStatus": "Completed"
+  }
+]

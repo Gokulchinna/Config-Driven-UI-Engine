@@ -1,0 +1,47 @@
+{
+  "title": "Government Office Service Queue Dashboard",
+  "layout": [
+    {
+      "id": "gov-stat-1",
+      "type": "stats-card",
+      "props": {
+        "title": "Overdue SLA Tickets",
+        "metric": "count",
+        "targetField": "slaStatus",
+        "targetValue": "Overdue"
+      }
+    },
+    {
+      "id": "gov-stat-2",
+      "type": "stats-card",
+      "props": {
+        "title": "Completed Services",
+        "metric": "count",
+        "targetField": "ticketStatus",
+        "targetValue": "Completed"
+      }
+    },
+    {
+      "id": "gov-table",
+      "type": "table",
+      "props": {
+        "columns": [
+          { "key": "citizenName", "label": "Citizen Name" },
+          { "key": "service", "label": "Required Service" },
+          { "key": "tokenNumber", "label": "Token No." },
+          { "key": "slaStatus", "label": "SLA Status" },
+          { "key": "assignedOfficer", "label": "Assigned Officer" },
+          { "key": "ticketStatus", "label": "Status" }
+        ],
+        "filters": [
+          { "key": "service", "label": "Service Type" },
+          { "key": "slaStatus", "label": "SLA Status" }
+        ],
+        "search": {
+          "enabled": true,
+          "keys": ["citizenName", "assignedOfficer", "service"]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Arjun Sharma",
+    "branch": "CSE",
+    "cgpa": 8.9,
+    "attendance": 92,
+    "placedStatus": "Placed"
+  },
+  {
+    "id": 2,
+    "name": "Deepa Rao",
+    "branch": "ECE",
+    "cgpa": 7.8,
+    "attendance": 85,
+    "placedStatus": "In Progress"
+  },
+  {
+    "id": 3,
+    "name": "Rahul Verma",
+    "branch": "CSE",
+    "cgpa": 9.2,
+    "attendance": 96,
+    "placedStatus": "Placed"
+  },
+  {
+    "id": 4,
+    "name": "Sneha Nair",
+    "branch": "ME",
+    "cgpa": 7.1,
+    "attendance": 78,
+    "placedStatus": "Eligible"
+  },
+  {
+    "id": 5,
+    "name": "Vikram Sen",
+    "branch": "CSE",
+    "cgpa": 6.8,
+    "attendance": 81,
+    "placedStatus": "Eligible"
+  }
+]
